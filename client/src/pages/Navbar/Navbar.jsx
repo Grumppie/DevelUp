@@ -47,7 +47,7 @@ const Navbar = () => {
                         Profile
                     </NavLink>}
                     {/* Second Nav */}
-                    {!login ? <NavBtnLink to='/login'>Sign In</NavBtnLink> : <NavBtnLink to='/login' onClick={() => localStorage.clear()}>logout</NavBtnLink>}
+                    {!login ? <NavBtnLink to='/login'>Sign In</NavBtnLink> : <NavBtnLink to='/login' onClick={() => (localStorage.clear(),setLogin(false))}>logout</NavBtnLink>}
                 </NavMenu>
                 <NavBtn>
                 </NavBtn>
