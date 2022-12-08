@@ -80,6 +80,10 @@ export default function Search() {
         }))
     }
 
+    const searchSkills = (e) => {
+        setQuery(e.target.value)
+    }
+
     return (
         <div className={classes.outerDiv}>
             <div className={classes.backgroundDiv} style={{
@@ -96,23 +100,37 @@ export default function Search() {
                     <div style={{ positions: 'relative' }} onClick={search}>
                         <Button name="Find People"></Button>
                     </div> */}
-                    <input style={{ width: '60%' }} className='inputBox' placeholder='react, cpp ......' onChange={(e) => setQuery(e.target.value)} value={query}></input>
+                    <input style={{ width: '60%' }} className='inputBox' placeholder='react, cpp ......' onChange={(e) => searchSkills(e)} value={query}></input>
                     <div style={{ width: "20%", positions: 'relative' }} onClick={search}><Button name="Find People"></Button></div>
                 </div>
             </motion.div>
             <div >
-                <h1 style={{ display: 'block', fontSize: '3rem', textAlign: 'center', padding: "2rem", paddingTop: "5.2rem", color: '#277BC0' }}>Mentor</h1>
-                <div className={classes.cardsDiv}>
+                <div className={classes.cardsDiv} style={{display:'flex', flexDirection:'column'}}>
                     <h1 style={{ display: 'block', fontSize: '3rem', textAlign: 'center', padding: "2rem", paddingTop: "5.2rem", color: '#277BC0' }}>Mentor</h1>
-                    {mentorResponse && mentorResponse.map(resp => {
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
+                    {mentorResponse && mentorResponse.filter((val)=>{
+                        var arr = val.skills
+                        var flag=false;
+                        arr.map((val)=>{
+                            if(val.toLowerCase().includes(query)){
+                                flag= true
+                            }
+                        })
+                        if(query=="" || flag==true){
+                            return val
+                        }
+                    }).map(resp => {
                         return <Card user={resp} />
                     })}
+                    </div>
                 </div>
-                <div className={classes.cardsDiv}>
+                <div className={classes.cardsDiv} style={{display:'flex', flexDirection:'column'}}>
                     <h1 style={{ display: 'block', fontSize: '3rem', textAlign: 'center', padding: "2rem", paddingTop: "5.2rem", color: '#277BC0' }}>Mentees</h1>
+                    <div style={{display:'flex', flexWrap:'wrap'}}>
                     {menteeResponse && menteeResponse.map(resp => {
                         return <Card user={resp} />
                     })}
+                    </div>
                 </div>
             </div>
         </div>
